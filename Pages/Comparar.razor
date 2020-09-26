@@ -3,6 +3,8 @@
 @inject ICalculadorImpostosProgressivos CalculadorImpostosProgressivos
 @inject ICalculadorImpostosFlat CalculadorImpostosFlat
 
+@inject IAnalytics Analytics
+
 <h1>Comparação de vencimento líquido</h1>
 
 <div style="padding: 1.5rem">
@@ -69,6 +71,8 @@
 
     private void Calcular()
     {
+        Analytics.TrackEvent("calcular", DadosCalculo.VencimentoBruto.ToString(), "comparar");
+
         segurancaSocial = DadosCalculo.VencimentoBruto * DadosCalculo.TaxaSegurancaSocial;
         custoParaEmpresa = DadosCalculo.VencimentoBruto + DadosCalculo.VencimentoBruto * DadosCalculo.TaxaSegurancaSocialEmpresa;
         sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(DadosCalculo.VencimentoBruto, Localizacao.Continente, Categoria.TrabalhadorDependente, Situacao.NaoCasado, false, 0);
