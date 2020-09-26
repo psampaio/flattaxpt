@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazor.Analytics;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,11 @@ namespace FlatTaxPT
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            if (builder.HostEnvironment.IsProduction())
+            {
+                builder.Services.AddGoogleAnalytics("UA-179107737-1");
+            }
 
             builder.Services.AddSingleton<ICalculadorImpostosProgressivos, CalculadorImpostosProgressivos>();
             builder.Services.AddSingleton<ICalculadorImpostosFlat, CalculadorImpostosFlat>();
