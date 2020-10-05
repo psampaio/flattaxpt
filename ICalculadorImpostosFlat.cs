@@ -2,6 +2,6 @@
 {
     public interface ICalculadorImpostosFlat
     {
-        SumarioImpostos Calcular(decimal vencimento);
+        SumarioImpostos Calcular(decimal vencimento, int numeroDeDependentes);
     }
 }

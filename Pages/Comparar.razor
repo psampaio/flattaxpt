@@ -8,13 +8,50 @@
 <h1>Comparação de vencimento líquido</h1>
 
 <div style="padding: 1.5rem">
-    <EditForm Model="DadosCalculo">
-        <div class="form-group">
-            <label for="inputVencimento">Vencimento Base</label>
-            <input type="number" @bind="DadosCalculo.VencimentoBruto" class="form-control" id="inputVencimento" aria-describedby="ajudaVencimento">
-            <small id="ajudaVencimento" class="form-text text-muted">Vencimento bruto mensal (vencimento anual / 14 meses)</small>
+    <EditForm Model="@DadosCalculo" OnValidSubmit="@Calcular">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <h2>Agregado Familiar</h2>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="inputLocalizacao">Localização</label>
+                    <InputSelect class="form-control" @bind-Value="DadosCalculo.Localizacao" id="inputLocalizacao">
+                        <option>Continente</option>
+                        <option>Açores</option>
+                        <option>Madeira</option>
+                    </InputSelect>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="inputSituacao">Situação</label>
+                    <InputSelect class="form-control" @bind-Value="DadosCalculo.Situacao" id="inputSituacao">
+                        <option value="@Situacao.NaoCasado">Não Casado</option>
+                        <option value="@Situacao.CasadoUnico">Casado, Titular Único</option>
+                        <option value="@Situacao.CasadoDois">Casado, Dois Titulares</option>
+                    </InputSelect>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="inputDependentes">Dependentes</label>
+                    <InputNumber type="number" @bind-Value="DadosCalculo.Dependentes" class="form-control" id="inputDependentes" />
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary" @onclick="Calcular">Comparar</button>
+        <h2>Rendimentos</h2>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="inputVencimento">Vencimento Base</label>
+                    <InputNumber type="number" @bind-Value="DadosCalculo.VencimentoBase" class="form-control" id="inputVencimento" aria-describedby="ajudaVencimento" />
+                    <small id="ajudaVencimento" class="form-text text-muted">Vencimento bruto mensal (vencimento anual / 14 meses)</small>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Comparar</button>
     </EditForm>
 </div>
 
@@ -69,14 +106,15 @@
     private SumarioImpostos sumarioImpostosFlat = new SumarioImpostos();
     private SumarioImpostos sumarioImpostosProgressivos = new SumarioImpostos();
 
+
     private void Calcular()
     {
-        Analytics.TrackEvent("calcular", DadosCalculo.VencimentoBruto.ToString(), "comparar");
+        Analytics.TrackEvent("calcular", DadosCalculo.VencimentoBase.ToString(), "comparar");
 
-        segurancaSocial = DadosCalculo.VencimentoBruto * DadosCalculo.TaxaSegurancaSocial;
-        custoParaEmpresa = DadosCalculo.VencimentoBruto + DadosCalculo.VencimentoBruto * DadosCalculo.TaxaSegurancaSocialEmpresa;
-        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(DadosCalculo.VencimentoBruto, Localizacao.Continente, Categoria.TrabalhadorDependente, Situacao.NaoCasado, false, 0);
-        sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(DadosCalculo.VencimentoBruto);
+        segurancaSocial = DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocial;
+        custoParaEmpresa = DadosCalculo.VencimentoBase + DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocialEmpresa;
+        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Localizacao, Categoria.TrabalhadorDependente, DadosCalculo.Situacao, false, DadosCalculo.Dependentes);
+        sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Dependentes);
     }
 
 }

@@ -10,7 +10,9 @@ namespace FlatTaxPT
 
         public decimal ObterTaxa(in int numeroDeDependentes)
         {
-            return Taxas.ElementAtOrDefault(numeroDeDependentes);
+            return numeroDeDependentes >= Taxas.Count
+                ? Taxas.LastOrDefault()
+                : Taxas.ElementAtOrDefault(numeroDeDependentes);
         }
     }
 }
