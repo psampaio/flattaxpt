@@ -1,8 +1,7 @@
-﻿namespace FlatTaxPT
+﻿namespace FlatTaxPT;
+
+public enum Categoria
 {
-    public enum Categoria
-    {
-        TrabalhadorDependente
-        //Pension
-    }
+    TrabalhadorDependente
+    //Pension
 }

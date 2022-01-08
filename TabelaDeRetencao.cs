@@ -1,51 +1,47 @@
 ﻿using System.Globalization;
 
-namespace FlatTaxPT
+namespace FlatTaxPT;
+
+public class TabelaDeRetencao
 {
-    public class TabelaDeRetencao
+//    private static CultureInfo cultureInfo = CultureInfo.GetCultureInfo("pt-PT");
+    private static readonly CultureInfo cultureInfo = CultureInfo.GetCultureInfo("es-ES"); //TODO: parsing not working in pt?
+
+    private readonly List<Escalao> escaloes;
+
+    public TabelaDeRetencao(string textoTaxas, Localizacao localizacao, Categoria categoria,
+        Situacao situacao,
+        bool deficiente)
     {
-        private List<Escalao> Escaloes;
 
-        public Localizacao Localizacao { get; private set; }
-        public Categoria Categoria { get; private set; }
-        public Situacao Situacao { get; private set; }
-        public bool Deficiente { get; private set; }
-
-        public decimal ObterTaxa(decimal salary, in int numberOfDependents)
-        {
-            var escalao =
-                this.Escaloes.FirstOrDefault(l => salary < l.Vencimento)
-                ?? this.Escaloes.LastOrDefault();
-
-            return escalao?.ObterTaxa(numberOfDependents) ?? 0m;
-        }
-
-        public static TabelaDeRetencao Processar(string textoTaxas, Localizacao localizacao, Categoria categoria, Situacao situacao,
-            bool deficiente)
-        {
-            var cultureInfo = CultureInfo.GetCultureInfo("pt-PT");
-            cultureInfo = CultureInfo.GetCultureInfo("es-ES");
-
-            var tabelaDeRetencao = new TabelaDeRetencao
+        this.escaloes = textoTaxas.Split(Environment.NewLine,
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(l => l.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .Select(v =>
             {
-                Escaloes = textoTaxas.Split(Environment.NewLine,
-                        StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                    .Select(l => l.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-                    .Select(v =>
-                    {
-                        return new Escalao
-                        {
-                            Vencimento = Convert.ToDecimal(v.First(), cultureInfo),
-                            Taxas = v.Skip(1).Select(r => Convert.ToDecimal(r, cultureInfo)).ToList()
-                        };
-                    }).ToList(),
-                Localizacao = localizacao,
-                Categoria = categoria,
-                Situacao = situacao,
-                Deficiente = deficiente
-            };
+                return new Escalao
+                {
+                    Vencimento = Convert.ToDecimal(v.First(), cultureInfo),
+                    Taxas = v.Skip(1).Select(r => Convert.ToDecimal(r, cultureInfo)).ToList()
+                };
+            }).ToList();
+        Localizacao = localizacao;
+        Categoria = categoria;
+        Situacao = situacao;
+        Deficiente = deficiente;
+    }
 
-            return tabelaDeRetencao;
-        }
+    public Localizacao Localizacao { get; }
+    public Categoria Categoria { get; }
+    public Situacao Situacao { get; }
+    public bool Deficiente { get; }
+
+    public decimal ObterTaxa(decimal salary, in int numberOfDependents)
+    {
+        var escalao =
+            this.escaloes.FirstOrDefault(l => salary < l.Vencimento)
+            ?? this.escaloes.LastOrDefault();
+
+        return escalao?.ObterTaxa(numberOfDependents) ?? 0m;
     }
 }

@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace FlatTaxPT;
 
-namespace FlatTaxPT
+public class Escalao
 {
-    public class Escalao
-    {
-        public decimal Vencimento { get; set; }
-        public List<decimal> Taxas { get; set; }
+    public decimal Vencimento { get; init; }
+    public IEnumerable<decimal> Taxas { get; init; } = Enumerable.Empty<decimal>();
 
-        public decimal ObterTaxa(in int numeroDeDependentes)
-        {
-            return numeroDeDependentes >= Taxas.Count
-                ? Taxas.LastOrDefault()
-                : Taxas.ElementAtOrDefault(numeroDeDependentes);
-        }
+    public decimal ObterTaxa(in int numeroDeDependentes)
+    {
+        return numeroDeDependentes >= Taxas.Count()
+            ? Taxas.LastOrDefault()
+            : Taxas.ElementAtOrDefault(numeroDeDependentes);
     }
 }

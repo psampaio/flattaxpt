@@ -1,7 +1,6 @@
-﻿namespace FlatTaxPT
+﻿namespace FlatTaxPT;
+
+public interface ICalculadorImpostosFlat
 {
-    public interface ICalculadorImpostosFlat
-    {
-        SumarioImpostos Calcular(decimal vencimento, int numeroDeDependentes);
-    }
+    SumarioImpostos Calcular(decimal vencimento, int numeroDeDependentes);
 }

@@ -1,9 +1,8 @@
-﻿namespace FlatTaxPT
+﻿namespace FlatTaxPT;
+
+public enum Situacao
 {
-    public enum Situacao
-    {
-        NaoCasado,
-        CasadoUnico,
-        CasadoDois
-    }
+    NaoCasado,
+    CasadoUnico,
+    CasadoDois
 }

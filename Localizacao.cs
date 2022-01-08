@@ -1,9 +1,8 @@
-﻿namespace FlatTaxPT
+﻿namespace FlatTaxPT;
+
+public enum Localizacao
 {
-    public enum Localizacao
-    {
-        Continente,
-        Açores,
-        Madeira
-    }
+    Continente,
+    Açores,
+    Madeira
 }

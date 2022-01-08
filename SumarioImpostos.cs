@@ -1,12 +1,10 @@
-﻿namespace FlatTaxPT
-{
-    public class SumarioImpostos
-    {
-        public decimal VencimentoBase { get; set; }
-        public decimal Tributavel { get; set; }
-        public decimal Taxa { get; set; }
-        public decimal Retencao => Tributavel * Taxa;
+﻿namespace FlatTaxPT;
 
-        public decimal VencimentoLiquido => VencimentoBase - Retencao;
-    }
+public class SumarioImpostos
+{
+    public decimal VencimentoBase { get; init; }
+    public decimal Tributavel { get; init; }
+    public decimal Taxa { get; init; }
+    public decimal Retencao => Tributavel * Taxa;
+    public decimal VencimentoLiquido => VencimentoBase - Retencao;
 }
