@@ -109,7 +109,7 @@
 
     private void Calcular()
     {
-        Analytics.TrackEvent("calcular", DadosCalculo.VencimentoBase.ToString(), "comparar");
+        Analytics.TrackEvent("comparar", new { vencimento = DadosCalculo.VencimentoBase.ToString()});
 
         segurancaSocial = DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocial;
         custoParaEmpresa = DadosCalculo.VencimentoBase + DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocialEmpresa;

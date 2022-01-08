@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 
 namespace FlatTaxPT
 {
     public class TabelaDeRetencao
     {
-        private static readonly CultureInfo CultureInfo = new CultureInfo("pt-PT");
-
-        private List<Escalao> escaloes;
+        private List<Escalao> Escaloes;
 
         public Localizacao Localizacao { get; private set; }
         public Categoria Categoria { get; private set; }
@@ -19,8 +14,8 @@ namespace FlatTaxPT
         public decimal ObterTaxa(decimal salary, in int numberOfDependents)
         {
             var escalao =
-                escaloes.FirstOrDefault(l => salary < l.Vencimento)
-                ?? escaloes.LastOrDefault();
+                this.Escaloes.FirstOrDefault(l => salary < l.Vencimento)
+                ?? this.Escaloes.LastOrDefault();
 
             return escalao?.ObterTaxa(numberOfDependents) ?? 0m;
         }
@@ -28,17 +23,20 @@ namespace FlatTaxPT
         public static TabelaDeRetencao Processar(string textoTaxas, Localizacao localizacao, Categoria categoria, Situacao situacao,
             bool deficiente)
         {
-            return new TabelaDeRetencao
+            var cultureInfo = CultureInfo.GetCultureInfo("pt-PT");
+            cultureInfo = CultureInfo.GetCultureInfo("es-ES");
+
+            var tabelaDeRetencao = new TabelaDeRetencao
             {
-                escaloes = textoTaxas.Split(Environment.NewLine,
+                Escaloes = textoTaxas.Split(Environment.NewLine,
                         StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                     .Select(l => l.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
                     .Select(v =>
                     {
                         return new Escalao
                         {
-                            Vencimento = Convert.ToDecimal(v.First(), CultureInfo),
-                            Taxas = v.Skip(1).Select(r => Convert.ToDecimal(r, CultureInfo)).ToList()
+                            Vencimento = Convert.ToDecimal(v.First(), cultureInfo),
+                            Taxas = v.Skip(1).Select(r => Convert.ToDecimal(r, cultureInfo)).ToList()
                         };
                     }).ToList(),
                 Localizacao = localizacao,
@@ -46,6 +44,8 @@ namespace FlatTaxPT
                 Situacao = situacao,
                 Deficiente = deficiente
             };
+
+            return tabelaDeRetencao;
         }
     }
 }
