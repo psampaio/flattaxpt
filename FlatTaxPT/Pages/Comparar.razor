@@ -117,7 +117,7 @@
 
         segurancaSocial = DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocial;
         custoParaEmpresa = DadosCalculo.VencimentoBase + DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocialEmpresa;
-        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Localizacao, Categoria.TrabalhadorDependente, DadosCalculo.Situacao, false, DadosCalculo.Dependentes);
+        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Localizacao, Categoria.Dependente, DadosCalculo.Situacao, false, DadosCalculo.Dependentes);
         sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Dependentes);
     }
 

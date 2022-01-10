@@ -1,8 +1,8 @@
-﻿namespace FlatTaxPT;
+﻿namespace FlatTaxPT.Domain;
 
 public enum Localizacao
 {
     Continente,
-    Açores,
+    Acores,
     Madeira
 }

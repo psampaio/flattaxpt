@@ -1,9 +1,9 @@
-﻿namespace FlatTaxPT;
+﻿namespace FlatTaxPT.Domain;
 
 public class Escalao
 {
-    public decimal Vencimento { get; init; }
-    public IEnumerable<decimal> Taxas { get; init; } = Enumerable.Empty<decimal>();
+    public decimal Vencimento { get; set; }
+    public IList<decimal> Taxas { get; init; } = new List<decimal>();
 
     public decimal ObterTaxa(in int numeroDeDependentes)
     {

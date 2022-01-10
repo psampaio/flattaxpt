@@ -11,4 +11,14 @@
     <PackageReference Include="ClosedXML" Version="0.95.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FlatTaxPT.Domain\FlatTaxPT.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TabelasRetencao.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

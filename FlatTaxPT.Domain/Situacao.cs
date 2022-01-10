@@ -1,4 +1,4 @@
-﻿namespace FlatTaxPT;
+﻿namespace FlatTaxPT.Domain;
 
 public enum Situacao
 {

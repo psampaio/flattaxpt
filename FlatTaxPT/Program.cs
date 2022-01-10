@@ -12,7 +12,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 var trackingId = "UA-179107737-1";
 builder.Services.AddGoogleAnalytics(trackingId);
 
-builder.Services.AddSingleton<ICalculadorImpostosProgressivos, CalculadorImpostosProgressivos>();
-builder.Services.AddSingleton<ICalculadorImpostosFlat, CalculadorImpostosFlat>();
+builder.Services.AddScoped<ICalculadorImpostosProgressivos, CalculadorImpostosProgressivos>();
+builder.Services.AddScoped<ICalculadorImpostosFlat, CalculadorImpostosFlat>();
 
 await builder.Build().RunAsync();

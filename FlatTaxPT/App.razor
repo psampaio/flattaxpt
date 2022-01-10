@@ -2,6 +2,7 @@
 
 @inject IWebAssemblyHostEnvironment hostEnvironment
 @inject IAnalytics globalTracking
+@inject ICalculadorImpostosProgressivos calculadorImpostosProgressivos
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
@@ -20,13 +21,15 @@
 
 @code
 {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
         if (hostEnvironment.IsDevelopment())
         {
             globalTracking.Disable();
         }
+
+        await calculadorImpostosProgressivos.CarregaTabelasRetencao();
     }
 }
