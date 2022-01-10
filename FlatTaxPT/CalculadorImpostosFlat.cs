@@ -2,7 +2,7 @@
 
 public class CalculadorImpostosFlat : ICalculadorImpostosFlat
 {
-    private const decimal IsencaoBase = 650;
+    private const decimal IsencaoBase = 705;
     private const decimal IsencaoPorDependente = 200;
     private const decimal Taxa = 0.15m;
 
