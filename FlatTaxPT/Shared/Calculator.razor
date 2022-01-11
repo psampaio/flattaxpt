@@ -14,17 +14,17 @@
             <div class="mb-3">
                 <label for="inputLocalizacao" class="form-label">Localização</label>
                 <InputSelect class="form-select" @bind-Value="calculatorModel.Location" id="inputLocalizacao">
-                    <option value="@Localizacao.Continente">Continente</option>
-                    <option value="@Localizacao.Acores">Açores</option>
-                    <option value="@Localizacao.Madeira">Madeira</option>
+                    <option value="@Location.Continente">Continente</option>
+                    <option value="@Location.Acores">Açores</option>
+                    <option value="@Location.Madeira">Madeira</option>
                 </InputSelect>
             </div>
             <div class="mb-3">
                 <label for="inputSituacao" class="form-label">Situação</label>
                 <InputSelect class="form-select" @bind-Value="calculatorModel.Situation" id="inputSituacao">
-                    <option value="@Situacao.NaoCasado">Não Casado</option>
-                    <option value="@Situacao.CasadoUnico">Casado, Titular Único</option>
-                    <option value="@Situacao.CasadoDois">Casado, Dois Titulares</option>
+                    <option value="@Situation.NaoCasado">Não Casado</option>
+                    <option value="@Situation.CasadoUnico">Casado, Titular Único</option>
+                    <option value="@Situation.CasadoDois">Casado, Dois Titulares</option>
                 </InputSelect>
             </div>
             <div class="mb-3">
@@ -48,7 +48,7 @@
     </div>
 </EditForm>
 
-@if (sumarioVisivel)
+@if (IsSummaryVisible)
 {
     <table class="table table-bordered">
         <thead class="table-light">
@@ -81,18 +81,18 @@
         </tr>
         <tr>
             <th scope="row">Segurança Social</th>
-            <td colspan="2" class="text-center">@($"€-{segurancaSocial:N2}")</td>
+            <td colspan="2" class="text-center">@($"€-{SocialSecurity:N2}")</td>
         </tr>
         <tr>
             <th scope="row">Custo para a empresa</th>
-            <td colspan="2" class="text-center">@($"{custoParaEmpresa:N2}€")</td>
+            <td colspan="2" class="text-center">@($"{CompanyCost:N2}€")</td>
         </tr>
         </tbody>
         <tfoot class="table-light">
         <tr class="fw-bold">
             <th scope="row">Vencimento Líquido</th>
-            <td class="text-center">@($"{TaxSummaryFlat.NetIncome - segurancaSocial:N2}€")</td>
-            <td class="text-center">@($"{TaxSummaryProgressivos.NetIncome - segurancaSocial:N2}€")</td>
+            <td class="text-center">@($"{TaxSummaryFlat.NetIncome - SocialSecurity:N2}€")</td>
+            <td class="text-center">@($"{TaxSummaryProgressivos.NetIncome - SocialSecurity:N2}€")</td>
         </tr>
         </tfoot>
     </table>
@@ -100,7 +100,7 @@
     <h2 class="alert alert-success text-center">Aumento líquido mensal: @($"{TaxSummaryFlat.NetIncome - TaxSummaryProgressivos.NetIncome:N2}€")</h2>
 }
 
-@if (avisoVisivel)
+@if (IsWarningVisible)
 {
-    <h2 class="alert alert-warning text-center">Ainda não é possível efetuar a comparação nos Açores e na Madeia.</h2>
+    <h2 class="alert alert-warning text-center">Ainda não é possível efetuar a comparação nos Açores e na Madeira.</h2>
 }

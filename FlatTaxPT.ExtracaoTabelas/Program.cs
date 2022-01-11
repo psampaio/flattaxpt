@@ -12,10 +12,10 @@ Console.WriteLine($"A abrir o ficheiro {ficheiroTabelas}...");
 var workbook = new XLWorkbook(ficheiroTabelas);
 
 var dados = new List<dynamic>();
-foreach (var localizacao in Enum.GetValues<Localizacao>())
-foreach (var categoria in Enum.GetValues<Categoria>())
+foreach (var localizacao in Enum.GetValues<Location>())
+foreach (var categoria in Enum.GetValues<Category>())
 foreach (var deficiente in new[] { false, true })
-foreach (var situacao in Enum.GetValues<Situacao>())
+foreach (var situacao in Enum.GetValues<Situation>())
     dados.Add(new
     {
         Localizacao = localizacao,
@@ -24,7 +24,7 @@ foreach (var situacao in Enum.GetValues<Situacao>())
         Deficiente = deficiente
     });
 
-var tabelas = new List<TabelaDeRetencao>();
+var tabelas = new List<RetentionTable>();
 for (var index = 0; index < dados.Count; index++)
 {
     var d = dados[index];
@@ -32,7 +32,7 @@ for (var index = 0; index < dados.Count; index++)
     if (!workbook.TryGetWorksheet(d.Localizacao.ToString(), out IXLWorksheet worksheet))
         continue;
 
-    var tabela = new TabelaDeRetencao
+    var tabela = new RetentionTable
     {
         Location = d.Localizacao,
         Category = d.Categoria,
@@ -43,7 +43,7 @@ for (var index = 0; index < dados.Count; index++)
     for (var row = 3; row < 39; row++)
     {
         var vencimento = worksheet.Cell(row, 1).GetValue<decimal>();
-        var escalao = new Escalao
+        var escalao = new Bracket
         {
             Vencimento = vencimento
         };
@@ -53,7 +53,7 @@ for (var index = 0; index < dados.Count; index++)
             escalao.Taxas.Add(taxa);
         }
 
-        tabela.Escaloes.Add(escalao);
+        tabela.Brackets.Add(escalao);
     }
 
     tabelas.Add(tabela);

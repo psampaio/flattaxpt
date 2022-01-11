@@ -1,6 +1,6 @@
 ﻿namespace FlatTaxPT.Domain;
 
-public enum Localizacao
+public enum Location
 {
     Continente,
     Acores,

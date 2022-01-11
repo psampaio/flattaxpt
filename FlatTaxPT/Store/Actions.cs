@@ -2,10 +2,20 @@
 
 namespace FlatTaxPT.Store;
 
+public class CalculateSocialSecurityCostsAction
+{
+    public CalculateSocialSecurityCostsAction(decimal income)
+    {
+        Income = income;
+    }
+
+    public decimal Income { get; }
+}
+
 public class CalculateTaxesAction
 {
-    public CalculateTaxesAction(decimal income, int numberOfDependents, Localizacao location, Categoria category,
-        Situacao situation, bool handicapped, bool singleParentFamily)
+    public CalculateTaxesAction(decimal income, int numberOfDependents, Location location, Category category,
+        Situation situation, bool handicapped, bool singleParentFamily)
     {
         Income = income;
         NumberOfDependents = numberOfDependents;
@@ -18,9 +28,9 @@ public class CalculateTaxesAction
 
     public decimal Income { get; }
     public int NumberOfDependents { get; }
-    public Localizacao Location { get; }
-    public Categoria Category { get; }
-    public Situacao Situation { get; }
+    public Location Location { get; }
+    public Category Category { get; }
+    public Situation Situation { get; }
     public bool Handicapped { get; }
     public bool SingleParentFamily { get; }
 }
@@ -51,7 +61,7 @@ public class CalculateFlatTaxesAction : CalculateSpecificTaxesActionBase
 public class CalculateProgressiveTaxesAction : CalculateSpecificTaxesActionBase
 {
     public CalculateProgressiveTaxesAction(decimal income, int numberOfDependents,
-        IEnumerable<TabelaDeRetencao> retentionTables, Localizacao location, Categoria category, Situacao situation,
+        IEnumerable<RetentionTable> retentionTables, Location location, Category category, Situation situation,
         bool handicaped)
         : base(income, numberOfDependents)
     {
@@ -62,9 +72,9 @@ public class CalculateProgressiveTaxesAction : CalculateSpecificTaxesActionBase
         Handicaped = handicaped;
     }
 
-    public IEnumerable<TabelaDeRetencao> RetentionTables { get; }
-    public Localizacao Location { get; }
-    public Categoria Category { get; }
-    public Situacao Situation { get; }
+    public IEnumerable<RetentionTable> RetentionTables { get; }
+    public Location Location { get; }
+    public Category Category { get; }
+    public Situation Situation { get; }
     public bool Handicaped { get; }
 }

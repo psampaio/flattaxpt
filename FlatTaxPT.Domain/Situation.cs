@@ -1,6 +1,6 @@
 ﻿namespace FlatTaxPT.Domain;
 
-public enum Situacao
+public enum Situation
 {
     NaoCasado,
     CasadoUnico,

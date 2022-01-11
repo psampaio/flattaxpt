@@ -18,7 +18,7 @@ public class CalculateTaxesActionEffect : Effect<CalculateTaxesAction>
         }
     };
 
-    private List<TabelaDeRetencao>? tabelasRetencao;
+    private List<RetentionTable>? tabelasRetencao;
 
     public CalculateTaxesActionEffect(HttpClient httpClient)
     {
@@ -27,13 +27,15 @@ public class CalculateTaxesActionEffect : Effect<CalculateTaxesAction>
 
     public override async Task HandleAsync(CalculateTaxesAction action, IDispatcher dispatcher)
     {
-        this.tabelasRetencao ??=
-            await this.httpClient.GetFromJsonAsync<List<TabelaDeRetencao>>("data/tabelas_retencao.json", this.options);
+        var calculateSocialSecurityAction = new CalculateSocialSecurityCostsAction(action.Income);
+        dispatcher.Dispatch(calculateSocialSecurityAction);
 
         var calculateFlatTaxesAction =
             new CalculateFlatTaxesAction(action.Income, action.NumberOfDependents, action.SingleParentFamily);
         dispatcher.Dispatch(calculateFlatTaxesAction);
 
+        this.tabelasRetencao ??=
+            await this.httpClient.GetFromJsonAsync<List<RetentionTable>>("data/tabelas_retencao.json", this.options);
         var calculateProgressiveTaxesAction = new CalculateProgressiveTaxesAction(action.Income,
             action.NumberOfDependents, this.tabelasRetencao!, action.Location, action.Category, action.Situation,
             action.Handicapped);
