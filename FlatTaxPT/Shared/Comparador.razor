@@ -5,7 +5,7 @@
 
 <h1>Calculadora de vencimento líquido</h1>
 
-<EditForm Model="@DadosCalculo" OnValidSubmit="@Calcular">
+<EditForm Model="@dadosCalculo" OnValidSubmit="@Calcular">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
@@ -14,7 +14,7 @@
             <legend>Agregado Familiar</legend>
             <div class="mb-3">
                 <label for="inputLocalizacao" class="form-label">Localização</label>
-                <InputSelect class="form-select" @bind-Value="DadosCalculo.Localizacao" id="inputLocalizacao">
+                <InputSelect class="form-select" @bind-Value="dadosCalculo.Localizacao" id="inputLocalizacao">
                     <option value="@Localizacao.Continente">Continente</option>
                     <option value="@Localizacao.Acores">Açores</option>
                     <option value="@Localizacao.Madeira">Madeira</option>
@@ -22,7 +22,7 @@
             </div>
             <div class="mb-3">
                 <label for="inputSituacao" class="form-label">Situação</label>
-                <InputSelect class="form-select" @bind-Value="DadosCalculo.Situacao" id="inputSituacao">
+                <InputSelect class="form-select" @bind-Value="dadosCalculo.Situacao" id="inputSituacao">
                     <option value="@Situacao.NaoCasado">Não Casado</option>
                     <option value="@Situacao.CasadoUnico">Casado, Titular Único</option>
                     <option value="@Situacao.CasadoDois">Casado, Dois Titulares</option>
@@ -30,13 +30,17 @@
             </div>
             <div class="mb-3">
                 <label for="inputDependentes" class="form-label">Dependentes</label>
-                <InputNumber type="number" @bind-Value="DadosCalculo.Dependentes" class="form-control" id="inputDependentes"/>
+                <InputNumber type="number" @bind-Value="dadosCalculo.Dependentes" class="form-control" id="inputDependentes"/>
+            </div>
+            <div class="mb-3 form-check">
+                <InputCheckbox @bind-Value="dadosCalculo.FamiliaMonoparental" class="form-check-input" id="inputMonoparental"/>
+                <label for="inputMonoparental" class="form-label">Família Monoparental</label>
             </div>
         </fieldset>
         <fieldset class="col-md-6">
             <legend>Rendimentos</legend>
             <label for="inputVencimento" class="form-label">Vencimento Base</label>
-            <InputNumber type="number" @bind-Value="DadosCalculo.VencimentoBase" class="form-control" id="inputVencimento" aria-describedby="ajudaVencimento"/>
+            <InputNumber type="number" @bind-Value="dadosCalculo.VencimentoBase" class="form-control" id="inputVencimento" aria-describedby="ajudaVencimento"/>
             <div id="ajudaVencimento" class="form-text text-muted">Vencimento bruto mensal (vencimento anual / 14 meses)</div>
         </fieldset>
     </div>
@@ -57,6 +61,11 @@
         </thead>
         <tbody>
         <tr>
+            <th scope="row">Dedução</th>
+            <td class="text-center">@($"{-sumarioImpostosFlat.Deducao:N2}€")</td>
+            <td class="text-center">Variável</td>
+        </tr>
+        <tr>
             <th scope="row">Rendimento tributável</th>
             <td class="text-center">@($"{sumarioImpostosFlat.Tributavel:N2}€")</td>
             <td class="text-center">@($"{sumarioImpostosProgressivos.Tributavel:N2}€")</td>
@@ -68,12 +77,12 @@
         </tr>
         <tr>
             <th scope="row">Retenção de IRS</th>
-            <td class="text-center">@($"-{sumarioImpostosFlat.Retencao:N2}€")</td>
-            <td class="text-center">@($"-{sumarioImpostosProgressivos.Retencao:N2}€")</td>
+            <td class="text-center">@($"{-sumarioImpostosFlat.Retencao:N2}€")</td>
+            <td class="text-center">@($"{-sumarioImpostosProgressivos.Retencao:N2}€")</td>
         </tr>
         <tr>
             <th scope="row">Segurança Social</th>
-            <td colspan="2" class="text-center">@($"-€{segurancaSocial:N2}")</td>
+            <td colspan="2" class="text-center">@($"€-{segurancaSocial:N2}")</td>
         </tr>
         <tr>
             <th scope="row">Custo para a empresa</th>
@@ -93,7 +102,7 @@
 }
 
 @code {
-    private readonly DadosCalculo DadosCalculo = new();
+    private readonly DadosCalculo dadosCalculo = new();
 
     private decimal segurancaSocial;
     private decimal custoParaEmpresa;
@@ -105,15 +114,15 @@
 
     private void Calcular()
     {
-        Analytics.TrackEvent("comparar", new { vencimento = DadosCalculo.VencimentoBase.ToString() });
+        Analytics.TrackEvent("comparar", new { vencimento = dadosCalculo.VencimentoBase.ToString() });
 
         sumarioVisivel = true;
 
-        sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Dependentes);
-        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(DadosCalculo.VencimentoBase, DadosCalculo.Localizacao, Categoria.Dependente, DadosCalculo.Situacao, false, DadosCalculo.Dependentes);
+        sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(dadosCalculo.VencimentoBase, dadosCalculo.Dependentes, dadosCalculo.FamiliaMonoparental);
+        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(dadosCalculo.VencimentoBase, dadosCalculo.Localizacao, Categoria.Dependente, dadosCalculo.Situacao, false, dadosCalculo.Dependentes);
 
-        segurancaSocial = DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocial;
-        custoParaEmpresa = DadosCalculo.VencimentoBase + DadosCalculo.VencimentoBase * DadosCalculo.TaxaSegurancaSocialEmpresa;
+        segurancaSocial = dadosCalculo.VencimentoBase * dadosCalculo.TaxaSegurancaSocial;
+        custoParaEmpresa = dadosCalculo.VencimentoBase + dadosCalculo.VencimentoBase * dadosCalculo.TaxaSegurancaSocialEmpresa;
     }
 
 }

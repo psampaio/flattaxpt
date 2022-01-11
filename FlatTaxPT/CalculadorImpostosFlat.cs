@@ -6,12 +6,17 @@ public class CalculadorImpostosFlat : ICalculadorImpostosFlat
     private const decimal IsencaoPorDependente = 200;
     private const decimal Taxa = 0.15m;
 
-    public SumarioImpostos Calcular(decimal vencimento, int numeroDeDependentes)
+    public SumarioImpostos Calcular(decimal vencimento, int numeroDeDependentes, bool familiaMonoparental)
     {
+        var deducao = numeroDeDependentes * IsencaoPorDependente;
+        if (familiaMonoparental)
+            deducao *= 2;
+
         return new SumarioImpostos
         {
             VencimentoBase = vencimento,
-            Tributavel = Math.Max(0, vencimento - IsencaoBase - numeroDeDependentes * IsencaoPorDependente),
+            Deducao = deducao,
+            Tributavel = Math.Max(0, vencimento - IsencaoBase - deducao),
             Taxa = Taxa
         };
     }

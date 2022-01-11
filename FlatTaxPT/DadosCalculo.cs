@@ -12,6 +12,8 @@ public class DadosCalculo
     [Range(0, int.MaxValue, ErrorMessage = "Número de dependentes não pode ser negativo")]
     public int Dependentes { get; set; }
 
+    public bool FamiliaMonoparental { get; set; }
+
     [Required(ErrorMessage = "Vencimento Base é obrigatório")]
     [Range(1, int.MaxValue, ErrorMessage = "Vencimento Base tem de ser positivo")]
     public int VencimentoBase { get; set; } = 900;
