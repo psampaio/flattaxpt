@@ -34,10 +34,10 @@ for (var index = 0; index < dados.Count; index++)
 
     var tabela = new TabelaDeRetencao
     {
-        Localizacao = d.Localizacao,
-        Categoria = d.Categoria,
-        Situacao = d.Situacao,
-        Deficiente = d.Deficiente
+        Location = d.Localizacao,
+        Category = d.Categoria,
+        Situation = d.Situacao,
+        Handicaped = d.Deficiente
     };
 
     for (var row = 3; row < 39; row++)

@@ -2,7 +2,8 @@
 
 @inject IWebAssemblyHostEnvironment hostEnvironment
 @inject IAnalytics globalTracking
-@inject ICalculadorImpostosProgressivos calculadorImpostosProgressivos
+
+<Fluxor.Blazor.Web.StoreInitializer/>
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
@@ -29,7 +30,5 @@
         {
             globalTracking.Disable();
         }
-
-        await calculadorImpostosProgressivos.CarregaTabelasRetencao();
     }
 }
