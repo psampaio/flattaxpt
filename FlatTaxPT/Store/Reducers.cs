@@ -22,7 +22,8 @@ public static class Reducers
         var socialSecurity = action.Income * SocialSecurityRate;
         var companyCost = action.Income + action.Income * CompanySocialSecurityRate;
 
-        return new CalculatorState(state.IsWarningVisible, state.IsSummaryVisible, state.FlatTaxes, state.ProgressiveTaxes, socialSecurity, companyCost);
+        return new CalculatorState(state.IsWarningVisible, state.IsSummaryVisible, state.FlatTaxes,
+            state.ProgressiveTaxes, socialSecurity, companyCost);
     }
 
     [ReducerMethod]
@@ -49,7 +50,8 @@ public static class Reducers
             Rate = effectiveRate
         };
 
-        return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity, state.CompanyCost);
+        return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
+            state.CompanyCost);
     }
 
     [ReducerMethod]
@@ -68,9 +70,10 @@ public static class Reducers
             Rate = rate
         };
 
-        bool isWarningVisible = action.Location == Location.Acores || action.Location == Location.Madeira;
-        bool isSummaryVisible = action.Location == Location.Continente;
+        var isWarningVisible = action.Location == Location.Acores || action.Location == Location.Madeira;
+        var isSummaryVisible = action.Location == Location.Continente;
 
-        return new CalculatorState(isWarningVisible, isSummaryVisible, state.FlatTaxes, summary, state.SocialSecurity, state.CompanyCost);
+        return new CalculatorState(isWarningVisible, isSummaryVisible, state.FlatTaxes, summary, state.SocialSecurity,
+            state.CompanyCost);
     }
 }
