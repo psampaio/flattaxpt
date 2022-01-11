@@ -1,0 +1,31 @@
+/* /Shared/MainLayout.razor.rz.scp.css */
+main[b-2pe348o003] {
+    flex: 1;
+}
+
+.top-row[b-2pe348o003] {
+    background-color: rgb(0, 150, 204);
+    color: #ffffff;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+    .top-row[b-2pe348o003]  a, .top-row .btn-link[b-2pe348o003] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .top-row[b-2pe348o003]  a:hover, .top-row[b-2pe348o003]  .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row[b-2pe348o003]  a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
