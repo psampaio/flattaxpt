@@ -12,20 +12,26 @@
     <div class="row">
         <fieldset class="col-md-6">
             <legend>Agregado Familiar</legend>
-            <label for="inputLocalizacao" class="form-label">Localização</label>
-            <InputSelect class="form-select" @bind-Value="DadosCalculo.Localizacao" id="inputLocalizacao">
-                <option value="@Localizacao.Continente">Continente</option>
-                <option value="@Localizacao.Acores">Açores</option>
-                <option value="@Localizacao.Madeira">Madeira</option>
-            </InputSelect>
-            <label for="inputSituacao" class="form-label">Situação</label>
-            <InputSelect class="form-select" @bind-Value="DadosCalculo.Situacao" id="inputSituacao">
-                <option value="@Situacao.NaoCasado">Não Casado</option>
-                <option value="@Situacao.CasadoUnico">Casado, Titular Único</option>
-                <option value="@Situacao.CasadoDois">Casado, Dois Titulares</option>
-            </InputSelect>
-            <label for="inputDependentes" class="form-label">Dependentes</label>
-            <InputNumber type="number" @bind-Value="DadosCalculo.Dependentes" class="form-control" id="inputDependentes"/>
+            <div class="mb-3">
+                <label for="inputLocalizacao" class="form-label">Localização</label>
+                <InputSelect class="form-select" @bind-Value="DadosCalculo.Localizacao" id="inputLocalizacao">
+                    <option value="@Localizacao.Continente">Continente</option>
+                    <option value="@Localizacao.Acores">Açores</option>
+                    <option value="@Localizacao.Madeira">Madeira</option>
+                </InputSelect>
+            </div>
+            <div class="mb-3">
+                <label for="inputSituacao" class="form-label">Situação</label>
+                <InputSelect class="form-select" @bind-Value="DadosCalculo.Situacao" id="inputSituacao">
+                    <option value="@Situacao.NaoCasado">Não Casado</option>
+                    <option value="@Situacao.CasadoUnico">Casado, Titular Único</option>
+                    <option value="@Situacao.CasadoDois">Casado, Dois Titulares</option>
+                </InputSelect>
+            </div>
+            <div class="mb-3">
+                <label for="inputDependentes" class="form-label">Dependentes</label>
+                <InputNumber type="number" @bind-Value="DadosCalculo.Dependentes" class="form-control" id="inputDependentes"/>
+            </div>
         </fieldset>
         <fieldset class="col-md-6">
             <legend>Rendimentos</legend>
