@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "Blazor-Analytics.dll": "sha256-yTAF0Qalxq\/DOysqvnVLHrUEjWoKQvKtdde377CKsSI=",
-      "FlatTaxPT.dll": "sha256-9C6CegdtNDItplyyYCgquLpRFsx50fje\/37CG3RYpcM=",
+      "FlatTaxPT.dll": "sha256-rmcocNseb6PqriwYkBOJU4Gw+GOnxW64LArDv8YD1Mw=",
       "FlatTaxPT.Domain.dll": "sha256-9zUhGtr2gfn6NsrLbuarvUifYsSTwwcrINZMFeb6dhI=",
       "Microsoft.AspNetCore.Components.dll": "sha256-vThqV8gOZXYe9iFqxv2uf5T4Nj+TDP4J6x6lev7FqN8=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-lvK8BjUqR4beKl9SjUAY5QQ4YJmQHr06AdtE+ngBd+E=",
