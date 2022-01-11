@@ -101,6 +101,11 @@
     <h2 class="alert alert-success text-center">Aumento líquido mensal: @($"{sumarioImpostosFlat.VencimentoLiquido - sumarioImpostosProgressivos.VencimentoLiquido:N2}€")</h2>
 }
 
+@if (avisoVisivel)
+{
+    <h2 class="alert alert-warning text-center">Ainda não é possível efetuar a comparação nos Açores e na Madeia.</h2>
+}
+
 @code {
     private readonly DadosCalculo dadosCalculo = new();
 
@@ -111,18 +116,28 @@
     private SumarioImpostos sumarioImpostosProgressivos = new();
 
     private bool sumarioVisivel = false;
+    private bool avisoVisivel = false;
 
     private void Calcular()
     {
         Analytics.TrackEvent("comparar", new { vencimento = dadosCalculo.VencimentoBase.ToString() });
 
-        sumarioVisivel = true;
+        if (dadosCalculo.Localizacao == Localizacao.Continente)
+        {
+            sumarioVisivel = true;
+            avisoVisivel = false;
 
-        sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(dadosCalculo.VencimentoBase, dadosCalculo.Dependentes, dadosCalculo.FamiliaMonoparental);
-        sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(dadosCalculo.VencimentoBase, dadosCalculo.Localizacao, Categoria.Dependente, dadosCalculo.Situacao, false, dadosCalculo.Dependentes);
+            sumarioImpostosFlat = CalculadorImpostosFlat.Calcular(dadosCalculo.VencimentoBase, dadosCalculo.Dependentes, dadosCalculo.FamiliaMonoparental);
+            sumarioImpostosProgressivos = CalculadorImpostosProgressivos.Calcular(dadosCalculo.VencimentoBase, dadosCalculo.Localizacao, Categoria.Dependente, dadosCalculo.Situacao, false, dadosCalculo.Dependentes);
 
-        segurancaSocial = dadosCalculo.VencimentoBase * dadosCalculo.TaxaSegurancaSocial;
-        custoParaEmpresa = dadosCalculo.VencimentoBase + dadosCalculo.VencimentoBase * dadosCalculo.TaxaSegurancaSocialEmpresa;
+            segurancaSocial = dadosCalculo.VencimentoBase * dadosCalculo.TaxaSegurancaSocial;
+            custoParaEmpresa = dadosCalculo.VencimentoBase + dadosCalculo.VencimentoBase * dadosCalculo.TaxaSegurancaSocialEmpresa;
+        }
+        else
+        {
+            sumarioVisivel = false;
+            avisoVisivel = true;
+        }
     }
 
 }

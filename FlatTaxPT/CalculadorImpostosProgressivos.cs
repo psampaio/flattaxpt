@@ -23,7 +23,7 @@ public class CalculadorImpostosProgressivos : ICalculadorImpostosProgressivos
             t.Localizacao == localizacao && t.Categoria == categoria && t.Situacao == situacao &&
             t.Deficiente == deficiente);
 
-        if (tabelaDeRetencao == null) return null!;
+        if (tabelaDeRetencao == null) return new SumarioImpostos();
 
         var taxa = tabelaDeRetencao.ObterTaxa(vencimento, numeroDeDependentes);
         return new SumarioImpostos
