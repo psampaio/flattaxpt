@@ -1,17 +1,34 @@
 @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
+<main>
+    <div class="top-row">
+        <header class="container-md">
+            <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:serif="http://www.serif.com/" width="70" height="25" viewBox="0 0 70 30" version="1.1" xml:space="preserve" style="clip-rule: evenodd; fill-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 2;">
+                    <g transform="matrix(1,0,0,1,-690,-362.15)">
+                        <g transform="matrix(1.11613,0,0,1.11613,-80.0615,-124.938)">
+                            <circle cx="703.375" cy="449.846" r="13.439" style="fill: url(#_Radial1);"></circle>
+                        </g>
+                        <g transform="matrix(1.11613,0,0,1.11613,-40.0615,-124.938)">
+                            <circle cx="703.375" cy="449.846" r="13.439" style="fill: url(#_Radial2);"></circle>
+                        </g>
+                    </g>
+                    <defs>
+                        <radialGradient id="_Radial1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-15.9775,15.9775,-15.9775,-15.9775,710.255,443.055)">
+                            <stop offset="0" style="stop-color: rgb(255, 132, 66); stop-opacity: 1"></stop><stop offset="0.48" style="stop-color: rgb(241, 53, 43); stop-opacity: 1"></stop><stop offset="1" style="stop-color: rgb(237, 28, 36); stop-opacity: 1"></stop>
+                        </radialGradient>
+                        <radialGradient id="_Radial2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-15.9775,15.9775,-15.9775,-15.9775,710.255,443.055)">
+                            <stop offset="0" style="stop-color: rgb(0, 150, 204); stop-opacity: 1"></stop><stop offset="0.48" style="stop-color: rgb(0, 100, 157); stop-opacity: 1"></stop><stop offset="1" style="stop-color: rgb(0, 85, 143); stop-opacity: 1"></stop>
+                        </radialGradient>
+                    </defs>
+                </svg>
+                <span class="fw-bold">Flat Tax</span>
+            </a>
+            <a href="https://iniciativaliberal.pt/" target="_blank" class="float-end">Iniciativa Liberal</a>
+        </header>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://iniciativaliberal.pt/" target="_blank" class="ml-md-auto">Iniciativa Liberal</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    <article class="content container-md">
+        @Body
+    </article>
+</main>
