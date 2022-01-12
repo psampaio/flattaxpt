@@ -39,14 +39,18 @@ public static class Reducers
 
         var transitionIncome = Math.Max(action.Income - TransitionIncomeLimit, 0);
         var standardIncome = Math.Max(action.Income - transitionIncome - exemption, 0);
+        var totalIncome = standardIncome + transitionIncome;
+
+        var rate = totalIncome == 0
+            ? 0
+            : (standardIncome * StandardRate + transitionIncome * TransitionRate) / (standardIncome + transitionIncome);
 
         var summary = new TaxSummary
         {
             BaseIncome = action.Income,
             Deduction = deduction,
-            Taxable = action.Income - exemption,
-            Rate = (standardIncome * StandardRate + transitionIncome * TransitionRate) /
-                   (standardIncome + transitionIncome)
+            Taxable = totalIncome,
+            Rate = rate
         };
 
         return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
