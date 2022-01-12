@@ -25,7 +25,7 @@ public partial class Calculator
 
     private void Calcular()
     {
-        this.Analytics.TrackEvent("comparar", new { vencimento = this.calculatorModel.Income.ToString() });
+        this.Analytics.TrackEvent("calculate", "general", eventValue: this.calculatorModel.Income);
 
         var action = new CalculateTaxesAction(this.calculatorModel.Income, this.calculatorModel.NumberOfDependents,
             this.calculatorModel.Location, this.calculatorModel.Category, this.calculatorModel.Situation,
