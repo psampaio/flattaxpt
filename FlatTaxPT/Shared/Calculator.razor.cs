@@ -17,6 +17,11 @@ public partial class Calculator
     private TaxSummary TaxSummaryProgressivos => CalculadorState.Value.ProgressiveTaxes;
     public decimal SocialSecurity => CalculadorState.Value.SocialSecurity;
     public decimal CompanyCost => CalculadorState.Value.CompanyCost;
+    public decimal RaiseInEuros => TaxSummaryFlat.NetIncome - TaxSummaryProgressivos.NetIncome;
+
+    public decimal RaiseInPercentage =>
+        TaxSummaryProgressivos.NetIncome == 0 ? 0 : RaiseInEuros / TaxSummaryProgressivos.NetIncome;
+
 
     private void Calcular()
     {
