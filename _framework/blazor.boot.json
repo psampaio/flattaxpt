@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "Blazor-Analytics.dll": "sha256-yTAF0Qalxq\/DOysqvnVLHrUEjWoKQvKtdde377CKsSI=",
-      "FlatTaxPT.dll": "sha256-kec1FF0BhSz41knFlWl+fdBGZHAtMWr\/k7\/iK+wm03Y=",
+      "FlatTaxPT.dll": "sha256-Hbgji6A1Oef5XSTZzE0n\/BvobxrY8Qmvco6bwHEtWzY=",
       "FlatTaxPT.Domain.dll": "sha256-lcAwQZHhGhVjPmaYk7ZLrPQX9mskn\/BT7omTB500iSY=",
       "Fluxor.Blazor.Web.dll": "sha256-+cloxEm00bdasdol8A44y24waX9I+b58nTa7zpsEAzk=",
       "Fluxor.dll": "sha256-SOwJnc2Pql2PAu5nYdzo\/S8B6g0mb+idPW0Zp+jdMjo=",
@@ -44,11 +44,11 @@
       "System.Net.Http.Json.dll": "sha256-FTgfQKUE8+00zemOAmk3PeuUUyAKiVA3B8xIbbkODXo=",
       "System.Net.Primitives.dll": "sha256-ypruf1U7Twj2DVFyMoZeTMLBGKUgYa\/XzAE5Cy89H2Q=",
       "System.ObjectModel.dll": "sha256-q7II9J9ZiPq\/gTUUxowRBpFZTOWpA7RTG9fP4xga\/6I=",
-      "System.Private.CoreLib.dll": "sha256-CfmfkLOrVjsQorBDv+J32WMoUh09TjL\/OOvfvp7Rqjc=",
+      "System.Private.CoreLib.dll": "sha256-Y9qZI8i8yknLQl1IHe19EbWsaGrW+4qdWpL8Q\/ivf2Y=",
       "System.Private.Runtime.InteropServices.JavaScript.dll": "sha256-Rc8QyVWCGc1eFRa1I7mxkLxz28GlYv1jArtF1B7qNT0=",
       "System.Private.Uri.dll": "sha256-mxDd6BIsBKXUmm1yyI3qiY+xFJEXzpyu78EbKXogSfw=",
       "System.Runtime.CompilerServices.Unsafe.dll": "sha256-NJPcPizDV6A4CjOnszxYro9mJMWaHq2cGM2\/A0bAFNY=",
-      "System.Runtime.dll": "sha256-l2db3Ne7mpDhkajT57rp0Fhk8uKVaGq3pR8+weo9Hdw=",
+      "System.Runtime.dll": "sha256-3nwauWmVl5K+Z1Xtsn4ct2lgjw5yIx\/1RXOj61DZBkQ=",
       "System.Text.Encodings.Web.dll": "sha256-gUV2fOrOUGrNK6Oj1AxlN44sKTuN4hYA1DxX8xuRU2c=",
       "System.Text.Json.dll": "sha256-xlzy8dKLtlFO85fAiMxeNSJJYEqVTWgYb+EhUmccekY=",
       "System.Threading.dll": "sha256-e4puRf5hW\/2wowSaN1nasa6AAY9sDzCIe0f\/Vo9Lmlo=",
