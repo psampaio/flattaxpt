@@ -14,7 +14,7 @@ public static class Reducers
     private const decimal ExemptionPerDependent = 200;
     private const decimal StandardRate = 0.15m;
     private const decimal TransitionRate = 0.28m;
-    private const decimal TransitionIncomeLimit = 30000 / 14;
+    private const decimal TransitionIncomeLimit = 30000m / 14;
 
 
     [ReducerMethod]
@@ -35,29 +35,19 @@ public static class Reducers
         if (action.SingleParentFamily)
             deduction *= 2;
 
-        var taxable = Math.Max(0, action.Income - BaseExemption - deduction);
+        var exemption = BaseExemption + deduction;
+
+        var transitionIncome = Math.Max(action.Income - TransitionIncomeLimit, 0);
+        var standardIncome = Math.Max(action.Income - transitionIncome - exemption, 0);
 
         var summary = new TaxSummary
         {
             BaseIncome = action.Income,
             Deduction = deduction,
-            Taxable = taxable
+            Taxable = action.Income - exemption,
+            Rate = (standardIncome * StandardRate + transitionIncome * TransitionRate) /
+                   (standardIncome + transitionIncome)
         };
-
-        if (taxable == 0)
-        {
-            return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
-                state.CompanyCost);
-        }
-
-        var transitionIncome = taxable > TransitionIncomeLimit
-            ? taxable - TransitionIncomeLimit
-            : 0;
-
-        var adjustedRate =
-            (Math.Min(taxable, TransitionIncomeLimit) * StandardRate + transitionIncome * TransitionRate) / taxable;
-
-        summary.Rate = adjustedRate;
 
         return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
             state.CompanyCost);
