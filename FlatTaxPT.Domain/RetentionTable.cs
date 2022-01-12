@@ -11,7 +11,7 @@ public class RetentionTable
     public decimal GetRate(decimal income, in int numberOfDependents)
     {
         var bracket =
-            Brackets.FirstOrDefault(l => income < l.Vencimento)
+            Brackets.FirstOrDefault(l => income <= l.Vencimento)
             ?? Brackets.LastOrDefault();
 
         return bracket?.GetRate(numberOfDependents) ?? 0m;
