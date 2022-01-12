@@ -8,6 +8,8 @@ public static class Reducers
     private const decimal SocialSecurityRate = 0.11m;
     private const decimal CompanySocialSecurityRate = 0.2375m;
 
+    //private const decimal IAS = 443.20m;
+    //private const decimal BaseExemption = IAS * 1.5m;
     private const decimal BaseExemption = 705;
     private const decimal ExemptionPerDependent = 200;
     private const decimal StandardRate = 0.15m;
