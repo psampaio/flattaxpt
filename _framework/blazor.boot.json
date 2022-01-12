@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "Blazor-Analytics.dll": "sha256-yTAF0Qalxq\/DOysqvnVLHrUEjWoKQvKtdde377CKsSI=",
-      "FlatTaxPT.dll": "sha256-OSxC80ucuVOi2Tie1ztkRWEGI7e6IO3KulyPEDgxFHU=",
+      "FlatTaxPT.dll": "sha256-eAGAlII6hna3jt30Txh+ugQrhbK5K+zZ04ZyKfGsk70=",
       "FlatTaxPT.Domain.dll": "sha256-7EplOzgv12D0jL+k9KCNOeLhLbT5ibU0jdj+flpqXcg=",
       "Fluxor.Blazor.Web.dll": "sha256-+cloxEm00bdasdol8A44y24waX9I+b58nTa7zpsEAzk=",
       "Fluxor.dll": "sha256-SOwJnc2Pql2PAu5nYdzo\/S8B6g0mb+idPW0Zp+jdMjo=",
