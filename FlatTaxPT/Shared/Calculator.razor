@@ -51,6 +51,9 @@
 @if (IsSummaryVisible)
 {
     <table class="table table-bordered">
+        <col style="width:40%">
+        <col style="width:30%">
+        <col style="width:30%">
         <thead class="table-light">
         <tr>
             <th></th>
@@ -61,7 +64,10 @@
         <tbody>
         <tr>
             <th scope="row">Dedução</th>
-            <td class="text-center">@($"{-TaxSummaryFlat.Deduction:N2}€")</td>
+            <td class="text-center">
+                @($"{-TaxSummaryFlat.Deduction:N2}€")
+                <small class="text-muted" title="200€ por dependente, 400€ por dependente para famílias monoparentais">(+ info)</small>
+            </td>
             <td class="text-center">Variável</td>
         </tr>
         <tr>
