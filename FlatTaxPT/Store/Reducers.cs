@@ -35,6 +35,19 @@ public static class Reducers
 
         var taxable = Math.Max(0, action.Income - BaseExemption - deduction);
 
+        var summary = new TaxSummary
+        {
+            BaseIncome = action.Income,
+            Deduction = deduction,
+            Taxable = taxable
+        };
+
+        if (taxable == 0)
+        {
+            return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
+                state.CompanyCost);
+        }
+
         var transitionIncome = taxable > TransitionIncomeLimit
             ? taxable - TransitionIncomeLimit
             : 0;
@@ -42,13 +55,7 @@ public static class Reducers
         var effectiveRate =
             (Math.Min(taxable, TransitionIncomeLimit) * StandardRate + transitionIncome * TransitionRate) / taxable;
 
-        var summary = new TaxSummary
-        {
-            BaseIncome = action.Income,
-            Deduction = deduction,
-            Taxable = taxable,
-            Rate = effectiveRate
-        };
+        summary.Rate = effectiveRate;
 
         return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
             state.CompanyCost);
