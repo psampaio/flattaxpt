@@ -22,6 +22,7 @@ public partial class Calculator
     public decimal RaiseInPercentage =>
         TaxSummaryProgressivos.NetIncome == 0 ? 0 : RaiseInEuros / TaxSummaryProgressivos.NetIncome;
 
+    public string SocialSharingMessage => $"Com a Flat Tax da Iniciativa Liberal, vou ganhar mais {RaiseInPercentage:P2} por mês do que com os atuais escalões de IRS";
 
     private void Calcular()
     {
