@@ -12,7 +12,7 @@ public static class Reducers
     private const decimal ExemptionPerDependent = 200;
     private const decimal StandardRate = 0.15m;
     private const decimal TransitionRate = 0.28m;
-    private const decimal TransitionIncomeLimit = 30000;
+    private const decimal TransitionIncomeLimit = 30000 / 14;
 
 
     [ReducerMethod]
