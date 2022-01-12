@@ -86,6 +86,11 @@
             <td class="text-center">@($"{-TaxSummaryProgressivos.Retention:N2}€")</td>
         </tr>
         <tr>
+            <th scope="row">Taxa Efectiva de IRS</th>
+            <td class="text-center">@($"{TaxSummaryFlat.EffectiveRate:P2}")</td>
+            <td class="text-center">@($"{TaxSummaryProgressivos.EffectiveRate:P2}")</td>
+        </tr>
+        <tr>
             <th scope="row">Segurança Social</th>
             <td colspan="2" class="text-center">@($"€-{SocialSecurity:N2}")</td>
         </tr>

@@ -8,4 +8,5 @@ public class TaxSummary
     public decimal Rate { get; set; }
     public decimal Retention => Math.Floor(Taxable * Rate);
     public decimal NetIncome => BaseIncome - Retention;
+    public decimal EffectiveRate => BaseIncome == 0 ? 0 : 1 - NetIncome / BaseIncome;
 }

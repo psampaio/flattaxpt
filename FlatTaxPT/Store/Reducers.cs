@@ -52,10 +52,10 @@ public static class Reducers
             ? taxable - TransitionIncomeLimit
             : 0;
 
-        var effectiveRate =
+        var adjustedRate =
             (Math.Min(taxable, TransitionIncomeLimit) * StandardRate + transitionIncome * TransitionRate) / taxable;
 
-        summary.Rate = effectiveRate;
+        summary.Rate = adjustedRate;
 
         return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
             state.CompanyCost);
