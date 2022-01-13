@@ -10,10 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\main.yml = .github\workflows\main.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatTaxPT.ExtracaoTabelas", "FlatTaxPT.ExtracaoTabelas\FlatTaxPT.ExtracaoTabelas.csproj", "{20332EB9-E92F-4940-8E20-726BE49B1C1F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatTaxPT.Domain", "FlatTaxPT.Domain\FlatTaxPT.Domain.csproj", "{AA8CA1CD-0B1F-4600-98D9-799EB90B1B26}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,14 +20,6 @@ Global
 		{F2B8D80C-5C49-486E-831D-C9F4FBB7CE93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2B8D80C-5C49-486E-831D-C9F4FBB7CE93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2B8D80C-5C49-486E-831D-C9F4FBB7CE93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20332EB9-E92F-4940-8E20-726BE49B1C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20332EB9-E92F-4940-8E20-726BE49B1C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20332EB9-E92F-4940-8E20-726BE49B1C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20332EB9-E92F-4940-8E20-726BE49B1C1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA8CA1CD-0B1F-4600-98D9-799EB90B1B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA8CA1CD-0B1F-4600-98D9-799EB90B1B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA8CA1CD-0B1F-4600-98D9-799EB90B1B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA8CA1CD-0B1F-4600-98D9-799EB90B1B26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
