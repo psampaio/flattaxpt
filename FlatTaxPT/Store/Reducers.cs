@@ -8,7 +8,7 @@ public static class Reducers
     private const decimal CompanySocialSecurityRate = 0.2375m;
 
     //private const decimal IAS = 443.20m;
-    //private const decimal BaseExemption = IAS * 1.5m;
+    //private const decimal BaseExemption = IAS * 1.5m * 14;
     private const decimal BaseExemption = 705 * 14;
     private const decimal ExemptionPerDependent = 200 * 14;
     private const decimal StandardRate = 0.15m;
@@ -48,7 +48,7 @@ public static class Reducers
         var summary = new TaxSummary
         {
             BaseIncome = action.Income,
-            Deduction = deduction,
+            Deductions = deduction,
             Taxable = totalIncome,
             Rate = rate
         };
@@ -61,36 +61,46 @@ public static class Reducers
     public static CalculatorState CalculateProgressiveTaxesAction(CalculatorState state,
         CalculateProgressiveTaxesAction action)
     {
-        var totalDeductions = SpecificDeductions + action.Deductions;
-        var taxable = Math.Max(0, action.Income - totalDeductions);
+        var taxable = Math.Max(0, action.Income - SpecificDeductions);
 
-        Bracket standardBraket = null;
-        Bracket averageBraket = null;
+        Bracket? standardBracket = null;
+        Bracket? averageBracket = null;
         foreach (var bracket in action.Brackets.OrderBy(b => b.Income).Reverse())
         {
             if (bracket.Income < taxable)
             {
-                averageBraket = bracket;
+                averageBracket = bracket;
                 break;
             }
 
-            standardBraket = bracket;
+            standardBracket = bracket;
         }
 
-        var averageRateIncome = averageBraket.Income;
-        var standardRateIncome = taxable - averageRateIncome;
+        decimal rate;
+        if (taxable == 0 || standardBracket == null)
+            rate = 0;
+        else if (averageBracket == null)
+            rate = taxable * standardBracket.Rate / taxable;
+        else
+            rate = (averageBracket.Income * averageBracket.AverageRate +
+                    (taxable - averageBracket.Income) * standardBracket.Rate) / taxable;
 
-        var rate = taxable == 0
-            ? 0
-            : (averageRateIncome * averageBraket.AverageRate + standardRateIncome * standardBraket.Rate) / taxable;
+        int dependentDeductions = action.NumberOfDependents switch
+        {
+            0 => 0,
+            1 => 600,
+            _ => 600 + 900 * (action.NumberOfDependents - 1)
+        };
 
         var summary = new TaxSummary
         {
             BaseIncome = action.Income,
-            Deduction = totalDeductions,
+            Deductions = SpecificDeductions,
+            TaxDeductions = action.Deductions + dependentDeductions,
             Taxable = taxable,
             Rate = rate
         };
+
 
         return new CalculatorState(true, state.FlatTaxes, summary, state.SocialSecurity,
             state.CompanyCost);

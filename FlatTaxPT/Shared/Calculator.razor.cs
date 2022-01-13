@@ -1,4 +1,5 @@
-﻿using FlatTaxPT.Store;
+﻿using Blazor.Analytics;
+using FlatTaxPT.Store;
 using Fluxor;
 using Microsoft.AspNetCore.Components;
 
@@ -10,6 +11,7 @@ public partial class Calculator
 
     [Inject] private IState<CalculatorState> CalculadorState { get; set; } = null!;
     [Inject] private IDispatcher Dispatcher { get; set; } = null!;
+    [Inject] private IAnalytics Analytics{ get; set; } = null!;
 
     private bool IsSummaryVisible => CalculadorState.Value.IsSummaryVisible;
     private TaxSummary TaxSummaryFlat => CalculadorState.Value.FlatTaxes;
@@ -26,7 +28,7 @@ public partial class Calculator
 
     private void Calcular()
     {
-        this.Analytics.TrackEvent("calculate", "general", eventValue: this.calculatorModel.Income);
+        Analytics.TrackEvent("calculate", "general", eventValue: this.calculatorModel.Income);
 
         var action = new CalculateTaxesAction(this.calculatorModel.Income, this.calculatorModel.Deductions,
             this.calculatorModel.NumberOfDependents, this.calculatorModel.SingleParentFamily);

@@ -1,6 +1,4 @@
-﻿@inject IAnalytics Analytics
-
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <h1>Calculadora de vencimento líquido</h1>
 
@@ -49,60 +47,72 @@
         <tr>
             <th></th>
             <th scope="col" class="text-center">Flat Tax</th>
-            <th scope="col" class="text-center">Model Atual</th>
+            <th scope="col" class="text-center">Modelo Atual</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="row">Dedução</th>
+            <th scope="row">Custo para a empresa</th>
+            <td colspan="2" class="text-center">@($"{CompanyCost:N2}€")</td>
+        </tr>
+        <tr>
+            <th scope="row">Deduções Específicas</th>
             <td class="text-center">
-                @($"{-TaxSummaryFlat.Deduction:N2}€")
+                @($"{-TaxSummaryFlat.Deductions:N2}€")
                 <small class="text-muted" title="200€ por dependente, 400€ por dependente para famílias monoparentais">(+ info)</small>
             </td>
             <td class="text-center">
-                @($"{-TaxSummaryProgressivos.Deduction:N2}€")
-                <small class="text-muted" title="4014€ de deduções específicas">(+ info)</small>
+                @($"{-TaxSummaryProgressivos.Deductions:N2}€")
             </td>
         </tr>
         <tr>
-            <th scope="row">Rendimento tributável</th>
-            <td class="text-center">@($"{TaxSummaryFlat.Taxable:N2}€")</td>
+            <th scope="row">Rendimento coletável</th>
+            <td class="text-center">
+                @($"{TaxSummaryFlat.Taxable:N2}€")
+                <small class="text-muted" title="Isenção de 9870€ (705€ x 14)">(+ info)</small>
+            </td>
             <td class="text-center">@($"{TaxSummaryProgressivos.Taxable:N2}€")</td>
         </tr>
         <tr>
-            <th scope="row">Taxa de IRS</th>
+            <th scope="row">Taxa aplicável</th>
             <td class="text-center">@($"{TaxSummaryFlat.Rate:P2}")</td>
             <td class="text-center">@($"{TaxSummaryProgressivos.Rate:P2}")</td>
         </tr>
         <tr>
-            <th scope="row">Retenção de IRS</th>
-            <td class="text-center">@($"{-TaxSummaryFlat.Retention:N2}€")</td>
-            <td class="text-center">@($"{-TaxSummaryProgressivos.Retention:N2}€")</td>
+            <th scope="row">Coleta</th>
+            <td class="text-center">@($"{-TaxSummaryFlat.EffectiveTaxes:N2}€")</td>
+            <td class="text-center">@($"{-(TaxSummaryProgressivos.EffectiveTaxes):N2}€")</td>
         </tr>
         <tr>
-            <th scope="row">Segurança Social</th>
+            <th scope="row">Rendimento Líquido de IRS</th>
+            <td class="text-center">@($"{TaxSummaryFlat.NetIncome:N2}€")</td>
+            <td class="text-center">@($"{TaxSummaryProgressivos.NetIncome:N2}€")</td>
+        </tr>
+        <tr>
+            <th scope="row">Taxa Efectiva</th>
+            <td class="text-center">@($"{TaxSummaryFlat.EffectiveRate:P2}")</td>
+            <td class="text-center">@($"{TaxSummaryProgressivos.EffectiveRate:P2}")</td>
+        </tr>
+        <tr>
+            <th scope="row">Contribuições para a Segurança Social</th>
             <td colspan="2" class="text-center">@($"€-{SocialSecurity:N2}")</td>
-        </tr>
-        <tr>
-            <th scope="row">Custo para a empresa</th>
-            <td colspan="2" class="text-center">@($"{CompanyCost:N2}€")</td>
         </tr>
         </tbody>
         <tfoot class="table-light">
         <tr class="fw-bold">
-            <th scope="row">Taxa Efectiva de IRS</th>
-            <td class="text-center">@($"{TaxSummaryFlat.EffectiveRate:P2}")</td>
-            <td class="text-center">@($"{TaxSummaryProgressivos.EffectiveRate:P2}")</td>
-        </tr>
-        <tr class="fw-bold">
-            <th scope="row">Vencimento Líquido</th>
+            <th scope="row">Rendimento Líquido (Anual)</th>
             <td class="text-center">@($"{TaxSummaryFlat.NetIncome - SocialSecurity:N2}€")</td>
             <td class="text-center">@($"{TaxSummaryProgressivos.NetIncome - SocialSecurity:N2}€")</td>
+        </tr>
+        <tr class="fw-bold">
+            <th scope="row">Rendimento Líquido (Mensal)</th>
+            <td class="text-center">@($"{((TaxSummaryFlat.NetIncome - SocialSecurity)/14):N2}€")</td>
+            <td class="text-center">@($"{((TaxSummaryProgressivos.NetIncome - SocialSecurity)/14):N2}€")</td>
         </tr>
         </tfoot>
     </table>
 
-    <h2 class="alert alert-success text-center">Aumento líquido: @($"{RaiseInEuros:N2}€") @($"({RaiseInPercentage:P2})")</h2>
+    <h2 class="alert alert-success text-center">Aumento líquido de @($"{RaiseInPercentage:P2}"): @($"{RaiseInEuros:N2}€")/ano ou @($"{(RaiseInEuros/14):N2}€")/mês</h2>
 
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <SocialSharing Message="@SocialSharingMessage"/>
