@@ -1,6 +1,4 @@
-﻿using FlatTaxPT.Domain;
-
-namespace FlatTaxPT.Store;
+﻿namespace FlatTaxPT.Store;
 
 public class CalculateSocialSecurityCostsAction
 {
@@ -14,24 +12,17 @@ public class CalculateSocialSecurityCostsAction
 
 public class CalculateTaxesAction
 {
-    public CalculateTaxesAction(decimal income, int numberOfDependents, Location location, Category category,
-        Situation situation, bool handicapped, bool singleParentFamily)
+    public CalculateTaxesAction(decimal income, int deductions, int numberOfDependents, bool singleParentFamily)
     {
         Income = income;
+        Deductions = deductions;
         NumberOfDependents = numberOfDependents;
-        Location = location;
-        Category = category;
-        Situation = situation;
-        Handicapped = handicapped;
         SingleParentFamily = singleParentFamily;
     }
 
     public decimal Income { get; }
+    public int Deductions { get; }
     public int NumberOfDependents { get; }
-    public Location Location { get; }
-    public Category Category { get; }
-    public Situation Situation { get; }
-    public bool Handicapped { get; }
     public bool SingleParentFamily { get; }
 }
 
@@ -60,21 +51,14 @@ public class CalculateFlatTaxesAction : CalculateSpecificTaxesActionBase
 
 public class CalculateProgressiveTaxesAction : CalculateSpecificTaxesActionBase
 {
-    public CalculateProgressiveTaxesAction(decimal income, int numberOfDependents,
-        IEnumerable<RetentionTable> retentionTables, Location location, Category category, Situation situation,
-        bool handicaped)
+    public CalculateProgressiveTaxesAction(decimal income, int deductions, int numberOfDependents,
+        List<Bracket> brackets)
         : base(income, numberOfDependents)
     {
-        RetentionTables = retentionTables;
-        Location = location;
-        Category = category;
-        Situation = situation;
-        Handicaped = handicaped;
+        Deductions = deductions;
+        Brackets = brackets;
     }
 
-    public IEnumerable<RetentionTable> RetentionTables { get; }
-    public Location Location { get; }
-    public Category Category { get; }
-    public Situation Situation { get; }
-    public bool Handicaped { get; }
+    public int Deductions { get; }
+    public IEnumerable<Bracket> Brackets { get; }
 }

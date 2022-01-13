@@ -11,7 +11,7 @@ public class CalculatorState
         ProgressiveTaxes = new TaxSummary();
     }
 
-    public CalculatorState(bool isWarningVisible, bool isSummaryVisible, TaxSummary flatTaxes,
+    public CalculatorState(bool isSummaryVisible, TaxSummary flatTaxes,
         TaxSummary progressiveTaxes, decimal socialSecurity,
         decimal companyCost)
     {
@@ -19,11 +19,9 @@ public class CalculatorState
         ProgressiveTaxes = progressiveTaxes;
         SocialSecurity = socialSecurity;
         CompanyCost = companyCost;
-        IsWarningVisible = isWarningVisible;
         IsSummaryVisible = isSummaryVisible;
     }
 
-    public bool IsWarningVisible { get; }
     public bool IsSummaryVisible { get; }
     public TaxSummary FlatTaxes { get; }
     public TaxSummary ProgressiveTaxes { get; }

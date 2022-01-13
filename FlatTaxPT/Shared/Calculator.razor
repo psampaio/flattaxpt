@@ -12,22 +12,6 @@
         <fieldset class="col-md-6">
             <legend>Agregado Familiar</legend>
             <div class="mb-3">
-                <label for="inputLocalizacao" class="form-label">Localização</label>
-                <InputSelect class="form-select" @bind-Value="calculatorModel.Location" id="inputLocalizacao">
-                    <option value="@Location.Continente">Continente</option>
-                    <option value="@Location.Acores">Açores</option>
-                    <option value="@Location.Madeira">Madeira</option>
-                </InputSelect>
-            </div>
-            <div class="mb-3">
-                <label for="inputSituacao" class="form-label">Situação</label>
-                <InputSelect class="form-select" @bind-Value="calculatorModel.Situation" id="inputSituacao">
-                    <option value="@Situation.NaoCasado">Não Casado</option>
-                    <option value="@Situation.CasadoUnico">Casado, Titular Único</option>
-                    <option value="@Situation.CasadoDois">Casado, Dois Titulares</option>
-                </InputSelect>
-            </div>
-            <div class="mb-3">
                 <label for="inputDependentes" class="form-label">Dependentes</label>
                 <InputNumber type="number" @bind-Value="calculatorModel.NumberOfDependents" class="form-control" id="inputDependentes"/>
             </div>
@@ -38,9 +22,16 @@
         </fieldset>
         <fieldset class="col-md-6">
             <legend>Rendimentos</legend>
-            <label for="inputVencimento" class="form-label">Vencimento Base</label>
-            <InputNumber type="number" @bind-Value="calculatorModel.Income" class="form-control" id="inputVencimento" aria-describedby="ajudaVencimento"/>
-            <div id="ajudaVencimento" class="form-text text-muted">Vencimento bruto mensal (vencimento anual / 14 meses)</div>
+            <div class="mb-3">
+                <label for="inputVencimento" class="form-label">Vencimento Anual</label>
+                <InputNumber type="number" @bind-Value="calculatorModel.Income" class="form-control" id="inputVencimento" aria-describedby="ajudaVencimento"/>
+                <div id="ajudaVencimento" class="form-text text-muted">Vencimento bruto anual (vencimento mensal * 14 meses)</div>
+            </div>
+            <div class="mb-3">
+                <label for="inputDeducoes" class="form-label">Deduções à Coleta</label>
+                <InputNumber type="number" @bind-Value="calculatorModel.Deductions" class="form-control" id="inputDeducoes" aria-describedby="ajudaDeducoes"/>
+                <div id="ajudaDeducoes" class="form-text text-muted">Todas as deduções à coleta no modelo actual</div>
+            </div>
         </fieldset>
     </div>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center p-3">
@@ -51,9 +42,9 @@
 @if (IsSummaryVisible)
 {
     <table class="table table-bordered">
-        <col style="width:40%">
-        <col style="width:30%">
-        <col style="width:30%">
+        <col style="width: 40%">
+        <col style="width: 30%">
+        <col style="width: 30%">
         <thead class="table-light">
         <tr>
             <th></th>
@@ -68,7 +59,10 @@
                 @($"{-TaxSummaryFlat.Deduction:N2}€")
                 <small class="text-muted" title="200€ por dependente, 400€ por dependente para famílias monoparentais">(+ info)</small>
             </td>
-            <td class="text-center">Variável</td>
+            <td class="text-center">
+                @($"{-TaxSummaryProgressivos.Deduction:N2}€")
+                <small class="text-muted" title="4014€ de deduções específicas">(+ info)</small>
+            </td>
         </tr>
         <tr>
             <th scope="row">Rendimento tributável</th>
@@ -108,15 +102,10 @@
         </tfoot>
     </table>
 
-    <h2 class="alert alert-success text-center">Aumento líquido mensal: @($"{RaiseInEuros:N2}€") @($"({RaiseInPercentage:P2})")</h2>
+    <h2 class="alert alert-success text-center">Aumento líquido: @($"{RaiseInEuros:N2}€") @($"({RaiseInPercentage:P2})")</h2>
 
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <SocialSharing Message="@SocialSharingMessage"/>
         <a class="btn btn-secondary" href="https://iniciativaliberal.pt/legislativas-2022/programa-eleitoral/" target="_blank" role="button">Programa Eleitoral Legislativas 2022</a>
     </div>
-}
-
-@if (IsWarningVisible)
-{
-    <h2 class="alert alert-warning text-center">Ainda não é possível efetuar a comparação nos Açores e na Madeira.</h2>
 }

@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FlatTaxPT.Domain;
 using Fluxor;
 
 namespace FlatTaxPT.Store;
@@ -18,7 +17,7 @@ public class CalculateTaxesActionEffect : Effect<CalculateTaxesAction>
         }
     };
 
-    private List<RetentionTable>? tabelasRetencao;
+    private List<Bracket>? brakets;
 
     public CalculateTaxesActionEffect(HttpClient httpClient)
     {
@@ -34,11 +33,10 @@ public class CalculateTaxesActionEffect : Effect<CalculateTaxesAction>
             new CalculateFlatTaxesAction(action.Income, action.NumberOfDependents, action.SingleParentFamily);
         dispatcher.Dispatch(calculateFlatTaxesAction);
 
-        this.tabelasRetencao ??=
-            await this.httpClient.GetFromJsonAsync<List<RetentionTable>>("data/tabelas_retencao.json", this.options);
-        var calculateProgressiveTaxesAction = new CalculateProgressiveTaxesAction(action.Income,
-            action.NumberOfDependents, this.tabelasRetencao!, action.Location, action.Category, action.Situation,
-            action.Handicapped);
+        this.brakets ??= await this.httpClient.GetFromJsonAsync<List<Bracket>>("data/brackets.json", this.options);
+        var calculateProgressiveTaxesAction =
+            new CalculateProgressiveTaxesAction(action.Income, action.Deductions, action.NumberOfDependents,
+                this.brakets!);
         dispatcher.Dispatch(calculateProgressiveTaxesAction);
     }
 }

@@ -1,0 +1,37 @@
+[
+  {
+    "Income": 7112,
+    "Rate": 0.145,
+    "AverageRate": 0.145
+  },
+  {
+    "Income": 10732,
+    "Rate": 0.23,
+    "AverageRate": 0.17367
+  },
+  {
+    "Income": 20322,
+    "Rate": 0.285,
+    "AverageRate": 0.22621
+  },
+  {
+    "Income": 25075,
+    "Rate": 0.35,
+    "AverageRate": 0.24967
+  },
+  {
+    "Income": 36967,
+    "Rate": 0.37,
+    "AverageRate": 0.28838
+  },
+  {
+    "Income": 80882,
+    "Rate": 0.45,
+    "AverageRate": 0.37613
+  },
+  {
+    "Income": 9999999999,
+    "Rate": 0.48,
+    "AverageRate": 0
+  }
+]

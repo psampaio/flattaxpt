@@ -1,5 +1,4 @@
-﻿using FlatTaxPT.Domain;
-using Fluxor;
+﻿using Fluxor;
 
 namespace FlatTaxPT.Store;
 
@@ -10,12 +9,13 @@ public static class Reducers
 
     //private const decimal IAS = 443.20m;
     //private const decimal BaseExemption = IAS * 1.5m;
-    private const decimal BaseExemption = 705;
-    private const decimal ExemptionPerDependent = 200;
+    private const decimal BaseExemption = 705 * 14;
+    private const decimal ExemptionPerDependent = 200 * 14;
     private const decimal StandardRate = 0.15m;
     private const decimal TransitionRate = 0.28m;
-    private const decimal TransitionIncomeLimit = 30000m / 14;
+    private const decimal TransitionIncomeLimit = 30000m;
 
+    private const decimal SpecificDeductions = 4104m;
 
     [ReducerMethod]
     public static CalculatorState CalculateSocialSecurityAction(CalculatorState state,
@@ -24,7 +24,7 @@ public static class Reducers
         var socialSecurity = action.Income * SocialSecurityRate;
         var companyCost = action.Income + action.Income * CompanySocialSecurityRate;
 
-        return new CalculatorState(state.IsWarningVisible, state.IsSummaryVisible, state.FlatTaxes,
+        return new CalculatorState(state.IsSummaryVisible, state.FlatTaxes,
             state.ProgressiveTaxes, socialSecurity, companyCost);
     }
 
@@ -43,7 +43,7 @@ public static class Reducers
 
         var rate = totalIncome == 0
             ? 0
-            : (standardIncome * StandardRate + transitionIncome * TransitionRate) / (standardIncome + transitionIncome);
+            : (standardIncome * StandardRate + transitionIncome * TransitionRate) / totalIncome;
 
         var summary = new TaxSummary
         {
@@ -53,7 +53,7 @@ public static class Reducers
             Rate = rate
         };
 
-        return new CalculatorState(state.IsWarningVisible, true, summary, state.ProgressiveTaxes, state.SocialSecurity,
+        return new CalculatorState(true, summary, state.ProgressiveTaxes, state.SocialSecurity,
             state.CompanyCost);
     }
 
@@ -61,22 +61,38 @@ public static class Reducers
     public static CalculatorState CalculateProgressiveTaxesAction(CalculatorState state,
         CalculateProgressiveTaxesAction action)
     {
-        var retentionTable = action.RetentionTables.FirstOrDefault(t =>
-            t.Location == action.Location && t.Category == action.Category && t.Situation == action.Situation &&
-            t.Handicaped == action.Handicaped) ?? new RetentionTable();
+        var totalDeductions = SpecificDeductions + action.Deductions;
+        var taxable = Math.Max(0, action.Income - totalDeductions);
 
-        var rate = retentionTable.GetRate(action.Income, action.NumberOfDependents);
+        Bracket standardBraket = null;
+        Bracket averageBraket = null;
+        foreach (var bracket in action.Brackets.OrderBy(b => b.Income).Reverse())
+        {
+            if (bracket.Income < taxable)
+            {
+                averageBraket = bracket;
+                break;
+            }
+
+            standardBraket = bracket;
+        }
+
+        var averageRateIncome = averageBraket.Income;
+        var standardRateIncome = taxable - averageRateIncome;
+
+        var rate = taxable == 0
+            ? 0
+            : (averageRateIncome * averageBraket.AverageRate + standardRateIncome * standardBraket.Rate) / taxable;
+
         var summary = new TaxSummary
         {
             BaseIncome = action.Income,
-            Taxable = action.Income,
+            Deduction = totalDeductions,
+            Taxable = taxable,
             Rate = rate
         };
 
-        var isWarningVisible = action.Location == Location.Acores || action.Location == Location.Madeira;
-        var isSummaryVisible = action.Location == Location.Continente;
-
-        return new CalculatorState(isWarningVisible, isSummaryVisible, state.FlatTaxes, summary, state.SocialSecurity,
+        return new CalculatorState(true, state.FlatTaxes, summary, state.SocialSecurity,
             state.CompanyCost);
     }
 }
